@@ -1,0 +1,16 @@
+div {
+  max-width: 80%;
+  margin: 20px auto;
+  font-family: roboto, sans-serif;
+  font-size: 60px;
+  letter-spacing: 1px;
+}
+
+.cursor {
+  opacity: 1;
+  transition: 0.2s;
+}
+
+.cursor.active {
+  opacity: 0;
+}
