@@ -3,7 +3,7 @@ const spnText = document.querySelector(".text");
 const spnCursor = document.querySelector(".cursor");
 
 // Texts array
-const txt = ["Witaj, siemanko!", "Dobrze Cię widzieć.", "Co chcesz robić?"];
+const txt = ["Witaj!", "Dobrze Cię widzieć.", "Co chcesz robić?"];
 
 // Cursor animation function
 const cursorAnimation = () => {
@@ -13,38 +13,32 @@ const cursorAnimation = () => {
 setInterval(cursorAnimation, 400);
 
 // Main function parameters
-let arrayIndex = 0;
-let charIndex = 0;
-const time = 50;
-const deleteTime = 2000;
+let activeLetter = -20;
+let activeText = 0;
 
 // Main function
-const oneTxt = () => {
-  const addLetter = () => {
-    spnText.textContent += txt[arrayIndex][charIndex];
-    charIndex++;
+const addLetter = () => {
+  if (activeLetter >= 0) {
+    spnText.textContent += txt[activeText][activeLetter];
+  }
 
-    if (charIndex === txt[arrayIndex].length) {
-      clearInterval(writing);
+  activeLetter++;
 
-      const deleteText = () => {
-        arrayIndex++;
-        charIndex = 0;
+  if (activeLetter === txt[activeText].length) {
+    activeText++;
 
-        if (arrayIndex < txt.length) {
-          spnText.textContent = null;
-        }
-
-        if (arrayIndex === txt.length) {
-          clearInterval(allTexts);
-        }
-      };
-
-      setTimeout(deleteText, deleteTime);
+    if (activeText === txt.length) {
+      return;
     }
-  };
 
-  const writing = setInterval(addLetter, time);
+    return setTimeout(() => {
+      activeLetter = -10;
+      spnText.textContent = "";
+      addLetter();
+    }, 2000);
+  }
+
+  setTimeout(addLetter, 100);
 };
 
-const allTexts = setInterval(oneTxt, txt[arrayIndex][charIndex].length * time + deleteTime + 1000);
+addLetter();
